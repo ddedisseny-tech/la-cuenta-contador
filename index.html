@@ -150,7 +150,6 @@ function render(){
   <small>🍽️ Tapa (precio de la carta)</small><div class="chips">${TAPAS.map(c=>`<button data-t="${c}">${c}</button>`).join("")}</div>
   <div class="row"><button id="wn" ${S.wine>=10?"disabled":""}>🍷 + Vino (${S.wine}/10)</button><button id="tc">🎂 Tarta 40 €</button><button id="pr" ${S.last?"":"disabled"}>⭐ Premium ×2</button><button id="pg">💸 Propina</button><button id="qt" ${S.items.length?"":"disabled"}>🗑️ Quitar última</button></div>
   <small>🔥 Plato quemado (resta a la cuenta)</small><div class="chips ch4">${[0,10,20,30,40,50,60,70].map(v=>`<button data-q="${-v}">${v?"−"+v:"0"}</button>`).join("")}</div>
-  <div class="row"><input id="fr" type="number" inputmode="numeric" placeholder="Otro importe (admite negativos)"><button id="fa">➕ Añadir</button></div>
   <button class="pri" id="pd" style="width:100%;margin-top:6px" ${S.items.length||true?"":"disabled"}>🧾 Pedir la cuenta</button></div>
   <div class="grid">${S.players.map((p,i)=>`<div class="p ${S.starter==i?"starter":""}" style="--pc:${COL[i%8]}">
     <input class="name" data-i="${i}" value="${esc(p.name)}" aria-label="Nombre"><small>💶 Ahorros</small>
@@ -162,7 +161,7 @@ function render(){
   $("#u").onclick=undo;$("#rs").onclick=reset;$("#pm").onclick=()=>played(-1);$("#pp").onclick=()=>played(1);
   document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>addTapa(+b.dataset.t));
   document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>quemado(+b.dataset.q));
-  $("#tc").onclick=tarta;$("#wn").onclick=addWine;$("#pr").onclick=premium;$("#pg").onclick=propina;$("#qt").onclick=quitar;$("#fa").onclick=libre;$("#pd").onclick=pedir;
+  $("#tc").onclick=tarta;$("#wn").onclick=addWine;$("#pr").onclick=premium;$("#pg").onclick=propina;$("#qt").onclick=quitar;$("#pd").onclick=pedir;
   document.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>aum(+b.dataset.a,+b.dataset.d));
   document.querySelectorAll("input.name").forEach(e=>e.onchange=()=>{S.players[+e.dataset.i].name=e.value.trim()||"Participante";save();render()})}
 render();
