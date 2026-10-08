@@ -41,8 +41,15 @@ small{color:var(--mut);font-size:13px}
 .row input{flex:1 1 90px;min-width:0}
 input[type=number],input[type=text]{font:inherit;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:100%}
 .cnt{display:flex;align-items:center;gap:6px}
+.cw{display:flex;flex-direction:column;align-items:stretch;gap:6px}
+.cw button{width:100%;min-width:0;white-space:nowrap;padding:8px 6px}
+.bt{margin-bottom:8px}
+.cl{font-size:17px;font-weight:700}
+.hn{display:block;width:0;min-width:100%;text-align:center;font-size:12px;line-height:1.25}
 .cnt button{min-height:36px;padding:4px 12px}
-.ok{color:#9a3f08;font-weight:800}
+.ok{color:#15803d;font-weight:800}
+.go{color:#15803d;font-weight:800;font-size:15px}
+.nogo{color:#b91c1c;font-weight:800;font-size:15px}
 .ic{font-size:1.5em;line-height:1;vertical-align:-.14em;margin-right:.18em}
 h1 .ic{font-size:1.2em}
 .chips button .ic,.cnt button .ic{margin:0}
@@ -106,8 +113,8 @@ const esc=t=>t.replace(/"/g,"&quot;").replace(/</g,"&lt;");
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function mut(fn){H.push(JSON.stringify(S));if(H.length>60)H.shift();fn();save();render()}
 function undo(){if(!H.length)return;S=JSON.parse(H.pop());save();render()}
-function pick(title,opts){return new Promise(res=>{
-  $("#mt").textContent=title;const o=$("#opts");o.innerHTML="";
+function pick(title,opts,html){return new Promise(res=>{
+  if(html){$("#mt").innerHTML=title;big($("#mt"))}else $("#mt").textContent=title;const o=$("#opts");o.innerHTML="";
   opts.forEach(x=>{const b=document.createElement("button");b.textContent=x.l;b.onclick=()=>{$("#modal").classList.remove("show");res(x.v)};o.appendChild(b)});
   $("#mc").onclick=()=>{$("#modal").classList.remove("show");res(null)};$("#modal").classList.add("show");o.firstChild&&o.firstChild.focus()})}
 function setup(){
@@ -133,6 +140,9 @@ function quitar(){if(!S.items.length)return;mut(()=>{S.items.pop()})}
 function played(d){mut(()=>{S.played=Math.max(0,S.played+d)})}
 function aum(i,d){mut(()=>{const p=S.players[i];p.aum=Math.min(5,Math.max(0,p.aum+d))})}
 async function pedir(){
+  if(S.played<S.players.length){
+    const ok=await pick(`<span style="color:#b91c1c">⚠️ ¡Ojo!</span><br><span style="font-size:16px;font-weight:400;display:block;margin:6px 0">Aún no se han jugado tantas cartas como participantes (${S.played}/${S.players.length}). Si pides la cuenta ahora:</span><b style="color:#b91c1c;font-size:18px;display:block">DESCARTAS TU MANO ENTERA Y NO AUMENTAS TU MANO.</b>`,[{l:"🧾 Pedir la cuenta igualmente",v:1}],true);
+    if(!ok)return}
   const all=S.players.map((p,i)=>({l:p.name,v:i}));
   const pi=await pick("¿Quién pide la cuenta?",all);if(pi==null)return;
   const mode=await pick("¿Cómo se paga?",[{l:"Paga todo",v:"n"},{l:"A medias",v:"m"},{l:"A pachas",v:"p"}]);if(mode==null)return;
@@ -195,8 +205,9 @@ function render(){
   $("#app").innerHTML=`<header><div><h1>🍽️ La Cuenta</h1><div class="sub">Bar nº ${S.round}${S.starter!=null?" · empieza "+esc(S.players[S.starter].name):""}</div></div>
   <div class="tools"><button class="sec" id="u" ${H.length?"":"disabled"}>↩️ Deshacer</button><button class="sec" id="rs">🆕 Nueva</button></div></header>${endBox}
   <div class="bill"><div class="bt"><div><small>Cuenta del bar</small><div class="num">${eur(total())}</div></div>
-  <div class="cnt"><small>🃏 Cartas jugadas</small><button id="pm">−</button><b class="${can?"ok":""}">${S.played}/${N}</b><button id="pp">+</button></div></div>
-  <small>${can?"Ya puedes pedir la cuenta y aumentar tu mano.":"Aún no se puede pedir la cuenta a voluntad."}</small>
+  <div class="cw"><div class="cnt"><small class="cl">🃏 Cartas jugadas</small><b class="${can?"ok":""}" style="font-size:22px">${S.played}/${N}</b></div>
+  <button id="oc" title="Café, baño, cambio de sentido…">🃏 Otras cartas</button><small class="hn">Café, baño, cambio de sentido…</small></div></div>
+  <small class="${can?"go":"nogo"}">${can?"Ya puedes pedir la cuenta y aumentar tu mano.":"Aún no se puede pedir la cuenta a voluntad."}</small>
   <div class="items">${S.items.map(x=>`<span>${x.l}</span>`).join("")}</div>
   <small>🍽️ Tapa (precio de la carta)</small><div class="chips">${TAPAS.map(c=>`<button data-t="${c}">${c}</button>`).join("")}</div>
   <div class="row"><button id="wn" ${S.wine>=10?"disabled":""}>🍷 + Vino (${S.wine}/10)</button><button id="tc">🎂 Tarta 40 €</button><button id="pr" ${S.last?"":"disabled"}>⭐ Premium ×2</button><button id="pg">💸 Propina</button><button id="qt" ${S.items.length?"":"disabled"}>🗑️ Quitar última</button></div>
@@ -205,15 +216,14 @@ function render(){
   <div class="grid">${S.players.map((p,i)=>`<div class="p ${S.starter==i?"starter":""}" style="--pc:${COL[i%8]}">
     <input class="name" data-i="${i}" value="${esc(p.name)}" aria-label="Nombre"><small>💶 Ahorros</small>
     <div class="num ${p.money<=0?"neg":""}">${eur(p.money)}</div>
-    <div class="cnt"><small>✋ Mano ${5+p.aum} cartas</small><button data-a="${i}" data-d="-1" aria-label="Menos mano">−</button><button data-a="${i}" data-d="1" aria-label="Más mano">+</button></div></div>`).join("")}</div>
+    <div class="cnt"><small>✋ Mano ${5+p.aum} cartas</small></div></div>`).join("")}</div>
   <section><h2>🏆 Clasificación</h2><div class="rank">${rank.map((p,k)=>`<div><span><i class="dot" style="background:${COL[p.i%8]}"></i>${["🥇","🥈","🥉"][k]||(k+1)+"."} ${esc(p.name)}</span><b class="${p.money<=0?"neg":""}">${eur(p.money)}</b></div>`).join("")}</div></section>`;
   big($("#app"));
   if(S.over){document.querySelectorAll(".bill button,.bill input").forEach(b=>b.disabled=true);if(!S.shown){S.shown=true;save();setTimeout(showFin,200)}}
-  $("#u").onclick=undo;if($("#vr"))$("#vr").onclick=showFin;$("#rs").onclick=reset;$("#pm").onclick=()=>played(-1);$("#pp").onclick=()=>played(1);
+  $("#u").onclick=undo;if($("#vr"))$("#vr").onclick=showFin;$("#rs").onclick=reset;$("#oc").onclick=()=>played(1);
   document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>addTapa(+b.dataset.t));
   document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>quemado(+b.dataset.q));
   $("#tc").onclick=tarta;$("#wn").onclick=addWine;$("#pr").onclick=premium;$("#pg").onclick=propina;$("#qt").onclick=quitar;$("#pd").onclick=pedir;
-  document.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>aum(+b.dataset.a,+b.dataset.d));
   document.querySelectorAll("input.name").forEach(e=>e.onchange=()=>{S.players[+e.dataset.i].name=e.value.trim()||"Participante";save();render()})}
 render();
 </script></body></html>
