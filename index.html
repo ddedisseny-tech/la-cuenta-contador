@@ -6,15 +6,16 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#d9661f">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="La Cuenta">
 <style>
-:root{--bg:#f4f5f0;--card:#fff;--ink:#16221f;--mut:#5d6b67;--line:#d9ddd6;--acc:#d9661f;--onacc:#fff;--warn:#c2410c;--gold:#e8b030;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17120e;--card:#241c15;--ink:#f4efe8;--mut:#b5a898;--line:#3c3025;--acc:#f08a3e;--onacc:#241405;--warn:#fb923c;--gold:#f0c24a}}
-:root[data-theme="dark"]{--bg:#17120e;--card:#241c15;--ink:#f4efe8;--mut:#b5a898;--line:#3c3025;--acc:#f08a3e;--onacc:#241405;--warn:#fb923c;--gold:#f0c24a}
+:root{--bg:#fff3d6;--card:rgba(255,255,255,.94);--ink:#000;--mut:#000;--line:#e2b873;--acc:#d9661f;--onacc:#fff;--warn:#b91c1c;--gold:#f5b81c;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}
+html{min-height:100%;background:#ffe9a0}
+body{margin:0;min-height:100vh;background:linear-gradient(165deg,#ffcf9a 0%,#ffe2a1 55%,#fff3b0 100%) no-repeat;background-size:cover;color:var(--ink);font:400 16px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}
 h1,h2,.num{font-family:"Trebuchet MS",system-ui,sans-serif}
 main{max-width:1000px;margin:0 auto;padding:16px}
 button{font:inherit;color:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;min-height:44px}
@@ -23,10 +24,10 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-o
 button.pri{background:var(--acc);color:var(--onacc);border-color:var(--acc);font-weight:700}
 button.sec{background:transparent}
 header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-h1{font-size:28px;margin:0;font-weight:800}
-.sub{font-size:15px;color:var(--mut)}
+h1{font-family:"Lilita One","Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;font-size:clamp(38px,10vw,54px);font-weight:400;letter-spacing:1px;line-height:1.05;margin:0;color:#000;text-shadow:3px 3px 0 rgba(255,255,255,.75)}
+.sub{display:inline-block;margin-top:6px;font-size:21px;font-weight:800;color:#000;background:var(--gold);border-radius:99px;padding:5px 16px;box-shadow:0 2px 6px rgba(150,70,0,.2)}
 .tools{display:flex;gap:8px;flex-wrap:wrap}
-.bill{background:var(--card);border:2px solid var(--acc);border-radius:16px;padding:14px;margin-bottom:14px}
+.bill{box-shadow:0 4px 14px rgba(150,70,0,.15);background:var(--card);border:2px solid var(--acc);border-radius:16px;padding:14px;margin-bottom:14px}
 .bt{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;flex-wrap:wrap}
 .num{font-size:34px;font-weight:800;line-height:1}
 small{color:var(--mut);font-size:13px}
@@ -41,9 +42,12 @@ small{color:var(--mut);font-size:13px}
 input[type=number],input[type=text]{font:inherit;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:100%}
 .cnt{display:flex;align-items:center;gap:6px}
 .cnt button{min-height:36px;padding:4px 12px}
-.ok{color:var(--acc);font-weight:700}
+.ok{color:#9a3f08;font-weight:800}
+.ic{font-size:1.5em;line-height:1;vertical-align:-.14em;margin-right:.18em}
+h1 .ic{font-size:1.2em}
+.chips button .ic,.cnt button .ic{margin:0}
 .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.p{background:var(--card);border:1px solid var(--line);border-top:8px solid var(--pc,var(--acc));border-radius:14px;padding:12px}
+.p{box-shadow:0 3px 10px rgba(150,70,0,.12);background:var(--card);border:1px solid var(--line);border-top:8px solid var(--pc,var(--acc));border-radius:14px;padding:12px}
 .p.starter{box-shadow:0 0 0 3px var(--gold)}
 .name{font-weight:700;font-size:18px;background:transparent;border:0;border-bottom:1px dashed var(--line);color:inherit;width:100%;padding:2px 0}
 .p .num{font-size:30px;margin:8px 0 2px}
@@ -75,6 +79,11 @@ let S=null,H=[];
 try{const r=localStorage.getItem(KEY);if(r)S=JSON.parse(r)}catch(e){}
 const $=s=>document.querySelector(s);
 const eur=n=>n.toLocaleString("es-ES")+" €";
+function big(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),ns=[];while(w.nextNode())ns.push(w.currentNode);
+  const E=/(\p{Extended_Pictographic}\uFE0F?)/u;
+  ns.forEach(n=>{const t=n.nodeValue;if(!E.test(t))return;const f=document.createDocumentFragment();
+    t.split(E).forEach(p=>{if(p&&/^\p{Extended_Pictographic}/u.test(p)){const s=document.createElement("span");s.className="ic";s.textContent=p;f.appendChild(s)}else if(p)f.appendChild(document.createTextNode(p))});
+    n.parentNode.replaceChild(f,n)})}
 const esc=t=>t.replace(/"/g,"&quot;").replace(/</g,"&lt;");
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function mut(fn){H.push(JSON.stringify(S));if(H.length>60)H.shift();fn();save();render()}
@@ -90,6 +99,7 @@ function setup(){
   <p class="hint">Ahorros iniciales: <b>${eur(AH[n])}</b> por participante.</p>
   ${Array.from({length:n},(_,i)=>`<label>Nombre ${i+1}</label><input type="text" data-n placeholder="Participante ${i+1}">`).join("")}
   <p><button class="pri" id="go" style="width:100%">🍷 Empezar partida</button></p></div>`;
+  big($("#app"));
   document.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{window._n=+b.dataset.k;setup()});
   $("#go").onclick=()=>{const names=[...document.querySelectorAll("[data-n]")].map((e,i)=>e.value.trim()||"Participante "+(i+1));
     S={round:1,players:names.map(x=>({name:x,money:AH[n],aum:0})),items:[],played:0,wine:0,last:null,starter:null,over:false};H=[];save();render()}}
@@ -146,6 +156,7 @@ function render(){
     <div class="num ${p.money<=0?"neg":""}">${eur(p.money)}</div>
     <div class="cnt"><small>✋ Mano ${5+p.aum} cartas</small><button data-a="${i}" data-d="-1" aria-label="Menos mano">−</button><button data-a="${i}" data-d="1" aria-label="Más mano">+</button></div></div>`).join("")}</div>
   <section><h2>🏆 Clasificación</h2><div class="rank">${rank.map((p,k)=>`<div><span><i class="dot" style="background:${COL[p.i%8]}"></i>${["🥇","🥈","🥉"][k]||(k+1)+"."} ${esc(p.name)}</span><b class="${p.money<=0?"neg":""}">${eur(p.money)}</b></div>`).join("")}</div></section>`;
+  big($("#app"));
   if(S.over){document.querySelectorAll(".bill button,.bill input").forEach(b=>b.disabled=true)}
   $("#u").onclick=undo;$("#rs").onclick=reset;$("#pm").onclick=()=>played(-1);$("#pp").onclick=()=>played(1);
   document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>addTapa(+b.dataset.t));
