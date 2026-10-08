@@ -65,6 +65,7 @@ h2{font-size:20px;margin:0 0 8px}
 .setup .r6{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 .r6 button.on{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
 .hint{color:var(--mut);font-size:14px}
+.tagline{font-size:25px;font-weight:800;color:#b91c1c;margin:8px 0 4px}
 #modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;justify-content:center;z-index:9}
 #modal.show{display:flex}
 #box{background:var(--card);width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));max-height:85%;overflow:auto}
@@ -94,11 +95,11 @@ function pick(title,opts){return new Promise(res=>{
   $("#mc").onclick=()=>{$("#modal").classList.remove("show");res(null)};$("#modal").classList.add("show");o.firstChild&&o.firstChild.focus()})}
 function setup(){
   const n=+(window._n||4);
-  $("#app").innerHTML=`<div class="setup"><h1>🍽️ La Cuenta</h1><p class="hint">Contador de ahorros y cuentas. Sin bloc de papel.</p>
+  $("#app").innerHTML=`<div class="setup"><h1>🍽️ La Cuenta</h1><p class="hint tagline">¿Quién pagará hoy?</p>
   <label>Participantes</label><div class="r6">${[3,4,5,6,7,8].map(k=>`<button data-k="${k}" class="${k==n?"on":""}">${k}</button>`).join("")}</div>
   <p class="hint">Ahorros iniciales: <b>${eur(AH[n])}</b> por participante.</p>
   ${Array.from({length:n},(_,i)=>`<label>Nombre ${i+1}</label><input type="text" data-n placeholder="Participante ${i+1}">`).join("")}
-  <p><button class="pri" id="go" style="width:100%">🍷 Empezar partida</button></p></div>`;
+  <p><button class="pri" id="go" style="width:100%">✅ Empezar partida</button></p></div>`;
   big($("#app"));
   document.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{window._n=+b.dataset.k;setup()});
   $("#go").onclick=()=>{const names=[...document.querySelectorAll("[data-n]")].map((e,i)=>e.value.trim()||"Participante "+(i+1));
