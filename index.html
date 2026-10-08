@@ -65,6 +65,9 @@ h2{font-size:20px;margin:0 0 8px}
 .setup .r6{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 .r6 button.on{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
 .hint{color:var(--mut);font-size:14px}
+.legal{max-width:1000px;margin:8px auto 0;padding:14px 16px 28px;border-top:1px solid var(--line);font-size:12px;line-height:1.45;text-align:center;color:#000}
+.legal p{margin:0 0 4px}
+.legal a{color:#000;text-decoration:underline}
 .fin{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:30;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
 .fcard{background:linear-gradient(165deg,#fff7e0,#ffe9a8);border:4px solid var(--gold);border-radius:24px;max-width:430px;width:100%;padding:20px 18px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.4);animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
 @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
@@ -86,6 +89,7 @@ h2{font-size:20px;margin:0 0 8px}
 </style></head>
 <body><main id="app"></main>
 <div id="modal"><div id="box" role="dialog" aria-modal="true"><h2 id="mt"></h2><div id="opts"></div><button id="mc" class="sec" style="width:100%">Cancelar</button></div></div>
+<footer class="legal"><p><b>La Cuenta</b> es un juego de <b>2Tomatoes Games</b> (© 2025 2Tomatoes Games). Este contador ha sido diseñado y creado por <b>Ddedisseny Tech</b> como complemento para facilitar la contabilidad de la partida.</p><p>El nombre del juego y sus reglas pertenecen a sus titulares. Más información en <a href="https://2tomatoesgames.com" target="_blank" rel="noopener">2tomatoesgames.com</a>.</p></footer>
 <script>
 const KEY="lacuenta-v1",TAPAS=[10,20,30,40,50,60,70,80,90,100],WT=[0,30,60,120,180,240],AH={3:900,4:1000,5:1100,6:1200,7:1300,8:1400};
 const COL=["#e5484d","#3e8ef7","#2fa66a","#f0a020","#9b59d0","#e8589a","#14b8c4","#8a6a4a"];
