@@ -7,7 +7,7 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#d9661f">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="La Cuenta">
 <style>
@@ -32,6 +32,7 @@ h1{font-family:"Lilita One","Arial Rounded MT Bold","Trebuchet MS",system-ui,san
 .num{font-size:34px;font-weight:800;line-height:1}
 small{color:var(--mut);font-size:13px}
 .items{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;min-height:10px}
+.items span.grp{background:var(--gold);border:2px solid #d99a00;font-weight:800;color:#000;padding:2px 10px}
 .items span{background:var(--bg);border-radius:99px;padding:3px 10px;font-size:13px}
 .chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:8px 0}
 .chips button{padding:8px 0;font-weight:700}
@@ -43,7 +44,15 @@ input[type=number],input[type=text]{font:inherit;padding:10px;border:1px solid v
 .cnt{display:flex;align-items:center;gap:6px}
 .cw{display:flex;flex-direction:column;align-items:stretch;gap:6px}
 .cw button{width:100%;min-width:0;white-space:nowrap;padding:8px 6px}
-.bt{margin-bottom:8px}
+.bill{background-color:#ececea;background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='240'%20height='240'%3E%3Cfilter%20id='g'%20x='0'%20y='0'%20width='100%25'%20height='100%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.75'%20numOctaves='3'%20seed='4'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20values='0%200%200%200%200.35%20%200%200%200%200%200.35%20%200%200%200%200%200.35%20%200%200%200%200.55%20-0.2'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url%28%23g%29'/%3E%3C/svg%3E"),url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='320'%20height='320'%3E%3Cfilter%20id='f'%20x='0'%20y='0'%20width='100%25'%20height='100%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.02%200.06'%20numOctaves='2'%20seed='9'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20values='0%200%200%200%200.45%20%200%200%200%200%200.45%20%200%200%200%200%200.45%20%200%200%200%200.35%20-0.12'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url%28%23f%29'/%3E%3C/svg%3E"),linear-gradient(180deg,rgba(255,255,255,.6),rgba(255,255,255,0) 40%)}
+.bt{margin-bottom:8px;gap:10px}
+.tot{flex:1 1 200px;background:var(--gold);border-radius:14px;padding:8px 14px;box-shadow:0 2px 8px rgba(150,70,0,.2)}
+.st{display:block;font-size:16px;font-weight:800;color:#000;margin-top:4px}
+.tl{display:block;font-size:17px;font-weight:700;color:#000}
+.tot .num{font-size:58px;line-height:1.05;color:#000}
+.tot .num,.p .num{font-family:"Share Tech Mono","DejaVu Sans Mono",Menlo,Consolas,"Courier New",monospace;font-weight:400;letter-spacing:-1px;-webkit-text-stroke:1.4px currentColor}
+.tot .num{font-size:58px}
+.p .num{font-size:48px}
 .cl{font-size:17px;font-weight:700}
 .hn{display:block;width:0;min-width:100%;text-align:center;font-size:12px;line-height:1.25}
 .cnt button{min-height:36px;padding:4px 12px}
@@ -57,8 +66,13 @@ h1 .ic{font-size:1.2em}
 .p{box-shadow:0 3px 10px rgba(150,70,0,.12);background:var(--card);border:1px solid var(--line);border-top:8px solid var(--pc,var(--acc));border-radius:14px;padding:12px}
 .p.starter{box-shadow:0 0 0 3px var(--gold)}
 .name{font-weight:700;font-size:18px;background:transparent;border:0;border-bottom:1px dashed var(--line);color:inherit;width:100%;padding:2px 0}
-.p .num{font-size:30px;margin:8px 0 2px}
+.p .num{margin:4px 0 2px;line-height:1.05}
+.dl{display:block;margin-top:8px;font-size:17px;font-weight:700;color:#000}
 .neg{color:var(--warn)}
+.mano{display:flex;align-items:center;gap:12px;margin-top:10px;background:var(--bg);border:3px solid var(--pc,var(--acc));border-radius:14px;padding:6px 12px}
+.mano.plus{background:var(--gold)}
+.mn{font-family:"Lilita One","Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;font-size:40px;line-height:1;color:#000}
+.ml{font-size:17px;font-weight:700;color:#000}
 .tag{font-size:13px;background:var(--gold);color:#1b1b1b;border-radius:99px;padding:2px 10px;font-weight:700;display:inline-block}
 .end{background:var(--gold);color:#1b1b1b;border-radius:14px;padding:12px 16px;margin-bottom:12px}.end h2{margin:0 0 4px}.end p{margin:2px 0}
 section{margin-top:20px}
@@ -72,6 +86,10 @@ h2{font-size:20px;margin:0 0 8px}
 .setup .r6{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 .r6 button.on{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
 .hint{color:var(--mut);font-size:14px}
+.gate .card2{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:14px;box-shadow:0 4px 14px rgba(150,70,0,.15)}
+.gate label{margin:0 0 6px;color:#000;font-weight:700;font-size:17px}
+.gate .or{text-align:center;margin:12px 0;font-weight:700}
+.err{color:#b91c1c;font-weight:700;min-height:1.3em;margin:8px 0}
 .legal{max-width:1000px;margin:8px auto 0;padding:14px 16px 28px;border-top:1px solid var(--line);font-size:12px;line-height:1.45;text-align:center;color:#000}
 .legal p{margin:0 0 4px}
 .legal a{color:#000;text-decoration:underline}
@@ -109,6 +127,28 @@ function big(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),
   ns.forEach(n=>{const t=n.nodeValue;if(!E.test(t))return;const f=document.createDocumentFragment();
     t.split(E).forEach(p=>{if(p&&/^\p{Extended_Pictographic}/u.test(p)){const s=document.createElement("span");s.className="ic";s.textContent=p;f.appendChild(s)}else if(p)f.appendChild(document.createTextNode(p))});
     n.parentNode.replaceChild(f,n)})}
+const KEYH=5157956317376870,LK="lacuenta-lic",TK="lacuenta-trial";
+let LICOK=false,TR=null;
+const h53=(str,seed=0)=>{let h1=0xdeadbeef^seed,h2=0x41c6ce57^seed;for(let i=0,ch;i<str.length;i++){ch=str.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return 4294967296*(2097151&h2)+(h1>>>0)};
+function lic(){try{if(localStorage.getItem(LK)===String(KEYH))return true}catch(e){}return LICOK}
+function setLic(){LICOK=true;try{localStorage.setItem(LK,String(KEYH))}catch(e){}}
+function getTrial(){try{return localStorage.getItem(TK)||TR}catch(e){return TR}}
+function setTrial(v){TR=v;try{localStorage.setItem(TK,v)}catch(e){}}
+function gate(){
+  const used=getTrial()==="used",playing=!!S&&getTrial()==="active";
+  $("#app").innerHTML=`<div class="setup gate"><h1>🍽️ La Cuenta</h1><p class="hint tagline">¿Quién pagará hoy?</p>
+  <div class="card2"><label for="lk">🔑 Clave de licencia</label><input id="lk" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Introduce tu clave">
+  <p id="lerr" class="err" role="alert"></p><button class="pri" id="lgo" style="width:100%">🔓 Entrar</button></div>
+  <div class="or">o</div>
+  ${playing?'<button id="lback" style="width:100%">↩️ Volver a la partida</button>':'<button id="ltry" style="width:100%">🎲 Pruébame (una partida)</button>'}
+  <p class="hint">${playing?"Con la clave podrás jugar todas las partidas que quieras.":used?"Ya has usado tu prueba gratuita. Introduce la clave para seguir jugando.":"Prueba el contador en una partida. Con la clave entras siempre."}</p></div>`;
+  big($("#app"));
+  const go=()=>{const v=$("#lk").value.trim();
+    if(h53(v)===KEYH){setLic();window._gate=false;render()}
+    else{$("#lerr").textContent="Clave incorrecta. Revísala e inténtalo de nuevo.";$("#lk").select()}};
+  $("#lgo").onclick=go;$("#lk").onkeydown=e=>{if(e.key==="Enter")go()};
+  if($("#ltry"))$("#ltry").onclick=()=>{if(used){$("#lerr").textContent="Ya has usado tu prueba gratuita. Introduce la clave para seguir.";return}setTrial("active");render()};
+  if($("#lback"))$("#lback").onclick=()=>{window._gate=false;render()}}
 const esc=t=>t.replace(/"/g,"&quot;").replace(/</g,"&lt;");
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function mut(fn){H.push(JSON.stringify(S));if(H.length>60)H.shift();fn();save();render()}
@@ -129,15 +169,15 @@ function setup(){
   $("#go").onclick=()=>{const names=[...document.querySelectorAll("[data-n]")].map((e,i)=>e.value.trim()||"Participante "+(i+1));
     S={round:1,players:names.map(x=>({name:x,money:AH[n],aum:0})),items:[],played:0,wine:0,last:null,starter:null,over:false};H=[];save();render()}}
 const total=()=>S.items.reduce((a,x)=>a+x.v,0);
-function addTapa(v){mut(()=>{S.items.push({l:v+" €",v,t:1});S.played++;S.last={l:v+" €",v}})}
-function addWine(){mut(()=>{S.wine++;const n=(S.wine-1)%5+1,v=WT[n]-WT[n-1];S.items.push({l:"Vino +"+v,v});S.played++})}
-function quemado(v){mut(()=>{const l="Plato quemado "+(v?"−"+(-v):"0")+" €";S.items.push({l,v});S.played++;S.last={l,v}})}
-function tarta(){mut(()=>{S.items.push({l:"Tarta 40 €",v:40});S.played++})}
-function premium(){if(!S.last)return;mut(()=>{S.items.push({l:"Premium ×2",v:S.last.v})})}
-async function propina(){const t=S.items.filter(x=>x.t).map(x=>x.v);let v;if(t.length)v=Math.min(...t);else{v=await pick("Propina: no hay tapas apuntadas. ¿Precio de la tapa más barata?",TAPAS.map(x=>({l:x+" €",v:x})));if(v==null)return}mut(()=>{S.items.push({l:"Propina +"+v,v})})}
-function libre(){const e=$("#fr"),v=parseFloat(e.value);if(isNaN(v))return;mut(()=>{S.items.push({l:(v>0?"+":"")+v+" €",v});S.played++;S.last=v>0?{l:v+" €",v}:S.last})}
-function quitar(){if(!S.items.length)return;mut(()=>{S.items.pop()})}
-function played(d){mut(()=>{S.played=Math.max(0,S.played+d)})}
+function addTapa(v){mut(()=>{S.items.push({l:v+" €",v,b:v,t:1});S.played++;S.last=S.items.length-1})}
+function addWine(){mut(()=>{S.wine++;const n=(S.wine-1)%5+1,v=WT[n]-WT[n-1];S.items.push({l:"Vino +"+v,v});S.played++;S.last=null})}
+function quemado(v){mut(()=>{const l="Plato quemado "+(v?"−"+(-v):"0")+" €";S.items.push({l:l.replace("Plato quemado ",""),v,b:v,q:1});S.played++;S.last=S.items.length-1})}
+function tarta(){mut(()=>{S.items.push({l:"Tarta 40 €",v:40});S.played++;S.last=null})}
+function premium(){const it=typeof S.last==="number"?S.items[S.last]:null;if(!it)return;mut(()=>{const b=it.b!=null?it.b:it.v;it.b=b;it.p=1;it.v=b*2;S.last=null})}
+async function propina(){const t=S.items.filter(x=>x.t).map(x=>x.b!=null?x.b:x.v);let v;if(t.length)v=Math.min(...t);else{v=await pick("Propina: no hay tapas apuntadas. ¿Precio de la tapa más barata?",TAPAS.map(x=>({l:x+" €",v:x})));if(v==null)return}mut(()=>{S.items.push({l:"Propina +"+v,v});S.last=null})}
+function libre(){const e=$("#fr"),v=parseFloat(e.value);if(isNaN(v))return;mut(()=>{S.items.push({l:(v>0?"+":"")+v+" €",v});S.played++;S.last=null})}
+function quitar(){if(!S.items.length)return;mut(()=>{const i=S.items.length-1,it=S.items[i];if(it.p){it.p=0;it.v=it.b;S.last=i}else{S.items.pop();S.last=null}})}
+function played(d){mut(()=>{S.played=Math.max(0,S.played+d);S.last=null})}
 function aum(i,d){mut(()=>{const p=S.players[i];p.aum=Math.min(5,Math.max(0,p.aum+d))})}
 async function pedir(){
   if(S.played<S.players.length){
@@ -191,10 +231,11 @@ function showFin(){
   <div class="row"><button id="fv">👀 Ver partida</button><button class="pri" id="fn">🆕 Nueva partida</button></div></div>`;
   document.body.appendChild(d);big(d);
   d.querySelector("#fv").onclick=()=>d.remove();
-  d.querySelector("#fn").onclick=()=>{d.remove();S=null;H=[];try{localStorage.removeItem(KEY)}catch(e){}render()};
+  d.querySelector("#fn").onclick=()=>{d.remove();if(!lic())setTrial("used");S=null;H=[];try{localStorage.removeItem(KEY)}catch(e){}render()};
   confetti()}
-async function reset(){const r=await pick("¿Empezar una partida nueva? Se borra la actual.",[{l:"Sí, nueva partida",v:1}]);if(r){S=null;H=[];try{localStorage.removeItem(KEY)}catch(e){}render()}}
+async function reset(){const r=await pick(lic()?"¿Empezar una partida nueva? Se borra la actual.":"¿Empezar una partida nueva? Se borra la actual y terminará tu prueba gratuita.",[{l:"Sí, nueva partida",v:1}]);if(r){if(!lic())setTrial("used");S=null;H=[];try{localStorage.removeItem(KEY)}catch(e){}render()}}
 function render(){
+  if(!lic()&&(window._gate||getTrial()!=="active"))return gate();
   if(!S)return setup();
   const N=S.players.length,mx=Math.max(...S.players.map(p=>p.money));
   const win=S.players.filter(p=>p.money==mx).map(p=>p.name).join(" y "),lose=S.players.filter(p=>p.money<=0).map(p=>p.name).join(" y ");
@@ -203,24 +244,24 @@ function render(){
   const rank=S.players.map((p,i)=>({...p,i})).sort((a,b)=>b.money-a.money);
   const can=S.played>=N;
   $("#app").innerHTML=`<header><div><h1>🍽️ La Cuenta</h1><div class="sub">Bar nº ${S.round}${S.starter!=null?" · empieza "+esc(S.players[S.starter].name):""}</div></div>
-  <div class="tools"><button class="sec" id="u" ${H.length?"":"disabled"}>↩️ Deshacer</button><button class="sec" id="rs">🆕 Nueva</button></div></header>${endBox}
-  <div class="bill"><div class="bt"><div><small>Cuenta del bar</small><div class="num">${eur(total())}</div></div>
+  <div class="tools"><button class="sec" id="u" ${H.length?"":"disabled"}>↩️ Deshacer</button><button class="sec" id="rs">🆕 Nueva partida</button>${lic()?"":'<button class="sec" id="kb">🔑 Clave</button>'}</div></header>${endBox}
+  <div class="bill"><div class="bt"><div class="tot"><small class="tl">🧾 Cuenta del bar</small><div class="num">${eur(total())}</div></div>
   <div class="cw"><div class="cnt"><small class="cl">🃏 Cartas jugadas</small><b class="${can?"ok":""}" style="font-size:22px">${S.played}/${N}</b></div>
   <button id="oc" title="Café, baño, cambio de sentido…">🃏 Otras cartas</button><small class="hn">Café, baño, cambio de sentido…</small></div></div>
   <small class="${can?"go":"nogo"}">${can?"Ya puedes pedir la cuenta y aumentar tu mano.":"Aún no se puede pedir la cuenta a voluntad."}</small>
-  <div class="items">${S.items.map(x=>`<span>${x.l}</span>`).join("")}</div>
-  <small>🍽️ Tapa (precio de la carta)</small><div class="chips">${TAPAS.map(c=>`<button data-t="${c}">${c}</button>`).join("")}</div>
-  <div class="row"><button id="wn" ${S.wine>=10?"disabled":""}>🍷 + Vino (${S.wine}/10)</button><button id="tc">🎂 Tarta 40 €</button><button id="pr" ${S.last?"":"disabled"}>⭐ Premium ×2</button><button id="pg">💸 Propina</button><button id="qt" ${S.items.length?"":"disabled"}>🗑️ Quitar última</button></div>
-  <small>🔥 Plato quemado (resta a la cuenta)</small><div class="chips ch4">${[0,10,20,30,40,50,60,70].map(v=>`<button data-q="${-v}">${v?"−"+v:"0"}</button>`).join("")}</div>
+  <div class="items">${S.items.map(x=>x.p?`<span class="grp">(${x.l} + Premium ×2)</span>`:`<span>${x.q?"Plato quemado "+x.l:x.l}</span>`).join("")}</div>
+  <small class="st">🍽️ Tapa (precio de la carta)</small><div class="chips">${TAPAS.map(c=>`<button data-t="${c}">${c}</button>`).join("")}</div>
+  <div class="row"><button id="wn" ${S.wine>=10?"disabled":""}>🍷 + Vino (${S.wine}/10)</button><button id="tc">🎂 Tarta 40 €</button><button id="pr" ${typeof S.last==="number"?"":"disabled"}>⭐ Premium ×2</button><button id="pg">💸 Propina</button><button id="qt" ${S.items.length?"":"disabled"}>🗑️ Quitar última</button></div>
+  <small class="st">🔥 Plato quemado (resta a la cuenta)</small><div class="chips ch4">${[0,10,20,30,40,50,60,70].map(v=>`<button data-q="${-v}">${v?"−"+v:"0"}</button>`).join("")}</div>
   <button class="pri" id="pd" style="width:100%;margin-top:6px" ${S.items.length||true?"":"disabled"}>🧾 Pedir la cuenta</button></div>
   <div class="grid">${S.players.map((p,i)=>`<div class="p ${S.starter==i?"starter":""}" style="--pc:${COL[i%8]}">
-    <input class="name" data-i="${i}" value="${esc(p.name)}" aria-label="Nombre"><small>💶 Ahorros</small>
+    <input class="name" data-i="${i}" value="${esc(p.name)}" aria-label="Nombre"><small class="dl">💶 Dinero disponible</small>
     <div class="num ${p.money<=0?"neg":""}">${eur(p.money)}</div>
-    <div class="cnt"><small>✋ Mano ${5+p.aum} cartas</small></div></div>`).join("")}</div>
+    <div class="mano ${p.aum?"plus":""}"><span class="mn">${5+p.aum}</span><span class="ml">✋ cartas en mano${p.aum?" (+"+p.aum+")":""}</span></div></div>`).join("")}</div>
   <section><h2>🏆 Clasificación</h2><div class="rank">${rank.map((p,k)=>`<div><span><i class="dot" style="background:${COL[p.i%8]}"></i>${["🥇","🥈","🥉"][k]||(k+1)+"."} ${esc(p.name)}</span><b class="${p.money<=0?"neg":""}">${eur(p.money)}</b></div>`).join("")}</div></section>`;
   big($("#app"));
   if(S.over){document.querySelectorAll(".bill button,.bill input").forEach(b=>b.disabled=true);if(!S.shown){S.shown=true;save();setTimeout(showFin,200)}}
-  $("#u").onclick=undo;if($("#vr"))$("#vr").onclick=showFin;$("#rs").onclick=reset;$("#oc").onclick=()=>played(1);
+  $("#u").onclick=undo;if($("#vr"))$("#vr").onclick=showFin;if($("#kb"))$("#kb").onclick=()=>{window._gate=true;render()};$("#rs").onclick=reset;$("#oc").onclick=()=>played(1);
   document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>addTapa(+b.dataset.t));
   document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>quemado(+b.dataset.q));
   $("#tc").onclick=tarta;$("#wn").onclick=addWine;$("#pr").onclick=premium;$("#pg").onclick=propina;$("#qt").onclick=quitar;$("#pd").onclick=pedir;
